@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WMS Wiki</title>
+  <link rel="stylesheet" href="/css/style.css?v=4" />
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-icon">◈</span>
+        <span class="logo-text">WMS Wiki</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="layout">
+
+    <!-- ── Left panel: document ingestion ── -->
+    <section class="panel" id="ingest-panel">
+      <h2 class="panel-title">Knowledge Base</h2>
+      <p class="panel-desc">
+        Ingest any documents that make up your source of truth — upload a file
+        or paste text below.
+      </p>
+
+      <form id="ingest-form" class="ingest-form">
+        <!-- ── File picker ── -->
+        <input
+          type="file"
+          id="file-input"
+          accept=".pdf,.txt,.md,.csv,.json,.html"
+          style="position:absolute;width:1px;height:1px;opacity:0;overflow:hidden;"
+        />
+        <div class="file-zone" id="file-zone">
+          <label for="file-input" class="btn btn-secondary">Choose file</label>
+          <span id="file-name-label" class="file-name-label">No file chosen</span>
+        </div>
+
+        <div class="form-divider"><span>or paste text below</span></div>
+
+        <label class="field-label" for="doc-source">Document name</label>
+        <input
+          id="doc-source"
+          class="input"
+          type="text"
+          placeholder="e.g. annual-report-2024.txt"
+          autocomplete="off"
+        />
+
+        <label class="field-label" for="doc-text">Document text</label>
+        <textarea
+          id="doc-text"
+          class="textarea"
+          rows="8"
+          placeholder="Paste the full document content here…"
+        ></textarea>
+
+        <button type="submit" class="btn btn-primary" id="ingest-btn">
+          <span class="btn-label">Ingest document</span>
+          <span class="spinner hidden" aria-hidden="true"></span>
+        </button>
+      </form>
+
+      <div id="ingest-status" class="status-msg hidden"></div>
+
+      <div id="doc-list-wrap" class="doc-list-wrap hidden">
+        <h3 class="doc-list-heading">Ingested this session</h3>
+        <ul id="doc-list" class="doc-list"></ul>
+      </div>
+    </section>
+
+    <!-- ── Right panel: chat ── -->
+    <section class="panel panel-chat" id="chat-panel">
+      <h2 class="panel-title">Ask a Question</h2>
+      <p class="panel-desc">
+        Ask anything about the documents you have ingested. The most relevant
+        sections are retrieved and cited in each answer.
+      </p>
+
+      <div id="messages" class="messages" aria-live="polite" aria-label="Conversation">
+        <div class="message message-system">
+          <p>Ingest at least one document, then ask a question.</p>
+        </div>
+      </div>
+
+      <form id="chat-form" class="chat-form">
+        <textarea
+          id="chat-input"
+          class="textarea chat-input"
+          rows="2"
+          placeholder="Ask a question about your documents…"
+        ></textarea>
+        <button type="submit" class="btn btn-primary" id="send-btn">
+          <span class="btn-label">Send</span>
+          <span class="spinner hidden" aria-hidden="true"></span>
+        </button>
+      </form>
+    </section>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked@14/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3/dist/purify.min.js"></script>
+  <script src="/js/app.js?v=5"></script>
+</body>
+</html>

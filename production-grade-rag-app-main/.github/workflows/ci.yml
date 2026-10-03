@@ -1,0 +1,37 @@
+name: CI
+
+# When CI comes into play: pushes to main, and every pull request.
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# If you push again before a run finishes, cancel the stale one (saves minutes).
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+# Least privilege: CI only needs to read the code.
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: pytest
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"     # match the dev environment
+          cache: pip                 # cache pip downloads (keyed on requirements.txt)
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run tests
+        run: pytest -v
